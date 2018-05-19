@@ -86,7 +86,7 @@ class SiteController extends CustomController
         ]);
     }
 
-    public function actionRegister()
+    /*public function actionRegister()
     {
         if(!Yii::$app->user->isGuest)
         {
@@ -101,11 +101,16 @@ class SiteController extends CustomController
             $this->Password = $model->password;
             if(!User::find()->where(['email'=> $model->email])->limit(1)->all())
             {
-               /* $model->password= Yii::$app->security->generatePasswordHash($model->password);*/
+                $model->password= Yii::$app->security->generatePasswordHash($model->password);
                 $model->code = Yii::$app->getSecurity()->generateRandomString(10);
                 $model->active = 0;
                 if ($model->save())
                 {
+                    //Назночаем Роль пользователя
+                    $auth = Yii::$app->authManager;
+                    $authorRole = $auth->getRole('user');
+                    $auth->assign($authorRole, $model->ID);
+
                     $model->sendConfirmationLink();
                     Yii::$app->session->setFlash('success', " Выслана ссылка для потверждения Вашей почты.");
                     return $this->redirect('/site/login');
@@ -121,6 +126,54 @@ class SiteController extends CustomController
             }
         }
         return $this->renderAjax('_form_register', compact('model'));
+    }*/
+
+    public function actionRegister()
+    {
+        if(!Yii::$app->user->isGuest)
+        {
+            return $this->redirect('/');
+        }
+        $this->setMeta('Enrollee KSTU | Регистрация', 'enrollee', 'Enrollee KSTU');
+        // Подключаемся к модели
+        $model = new User();
+
+        // Если чтото пришло
+        if ($model->load(Yii::$app->request->post()))
+        {
+            $this->Password = $model->password;
+
+            if(!User::find()->where(['email'=> $model->email])->limit(1)->all())
+            {
+               /* $model->password = Yii::$app->security->generatePasswordHash($model->password);*/
+                $model->code = Yii::$app->getSecurity()->generateRandomString(10);
+                $model->active = 0;
+                if ($model->save())
+                {
+                    //Назночаем Роль пользователя
+                    $auth = Yii::$app->authManager;
+                    $authorRole = $auth->getRole('user');
+                    $auth->assign($authorRole, $model->ID);
+                    // Отправляем письмо с потверждением емейла
+                    $model->sendConfirmationLink();
+                    Yii::$app->session->setFlash('success', " Выслана ссылка для потверждения Вашей почты.");
+                    return $this->render('greeting', compact('model'));
+                }
+
+                else
+                {
+                    $model->password = $this->Password;
+                    return $this->render('_form_register', compact('model'));
+                }
+            }
+            else
+            {
+                Yii::$app->session->setFlash('info', " Пользователь с таким E-mail зарегистрирован.");
+                return $this->render('index', compact('model'));
+            }
+
+        }
+        return $this->render('_form_register', compact('model'));
     }
 
     public function actionConfirmemail()
@@ -141,7 +194,9 @@ class SiteController extends CustomController
         {
             $model->code = '';
             $model->active = User::ACTIVE_USER;
+
             $model->save();
+
             Yii::$app->session->setFlash('success', "Ваш E-mail потверждён.");
             return $this->redirect('/site/login');
         }

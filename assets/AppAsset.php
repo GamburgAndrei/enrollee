@@ -25,7 +25,7 @@ class AppAsset extends AssetBundle
         'css/themify-icons.css',
         'css/owl.carousel.min.css',
         'css/style.css',
-        'css/site.css',
+       /* 'css/site.css',*/
 
     ];
     public $js = [

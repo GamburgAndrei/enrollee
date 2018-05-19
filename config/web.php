@@ -8,14 +8,16 @@ $config = [
     'language' => 'ru-RU', // Язык сайта
     'charset' => 'utf-8', // Кодировка сайта
     'defaultRoute' => 'site/index', // адрес по умолчанию
-    'modules' => [
-        'admin' => [
-            'class' => 'app\modules\admin\module',
-        ],
-    ],
+
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
+    ],
+    'modules' => [
+        'Admin' => [
+            'class' => 'app\modules\Admin\Module',
+            'layout' => '_main',
+        ],
     ],
     'components' => [
         'request' => [
@@ -30,8 +32,8 @@ $config = [
             'enableAutoLogin' => true,
            /* 'loginURL'=>'site/greeting'*/
         ],
-        'autManager'=>[
-            'class'=>'yii\rbac\DbManager'
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',

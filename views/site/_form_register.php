@@ -11,11 +11,11 @@ use app\assets\AppAsset;
 
 
 
-<div class="site-_form_register">
+<div class="site-_form_register container">
 
     <?php $form = ActiveForm::begin([
         'id' => 'register',
-        'enableAjaxValidation' => true,
+      /*  'enableAjaxValidation' => true,*/
     ]); ?>
 
         <?= $form->field($model, 'name')->textInput() ?>

@@ -77,7 +77,7 @@ AppAsset::register($this);
           <p><span style="color:#633991;font-size: 250%">Для работы вам необходимо</span></p>
 
 или
-
+          <a class="btn btn-success" href="/site/register">Отправить</a>
 
                   <?php
                   Modal::begin([

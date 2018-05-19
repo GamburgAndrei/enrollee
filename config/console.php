@@ -17,8 +17,8 @@ $config = [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'autManager'=>[
-            'class'=>'yii\rbac\DbManager'
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
         ],
         'log' => [
             'targets' => [

@@ -39,9 +39,7 @@ AppAssetAdmin::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'About', 'url' => ['/site/about']],
-            ['label' => 'Contact', 'url' => ['/site/contact']],
+
             Yii::$app->user->isGuest ? (
             ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
@@ -67,9 +65,12 @@ AppAssetAdmin::register($this);
         <div class="col-md-12">
             <div class="col-md-4">
                 <?= PanelMenu::widget(['items' => [
-                    ['label' => 'Пункт меню1', 'url' => ['#']],
-                    ['label' => 'Пункт меню2', 'url' => ['#']],
-                    ['label' => 'Пункт меню3', 'url' => ['#']],
+                    ['label' => 'Факультеты', 'url' => ['/Admin/faculties']],
+                    ['label' => 'Кафедры', 'url' => ['/Admin/departments']],
+                    ['label' => 'Учебные направления', 'url' => ['/Admin/academic']],
+                    ['label' => 'Страны', 'url' => ['/Admin/country']],
+
+
                 ],
                     'heading' => 'Меню',
                     'type' => 'panel-default',

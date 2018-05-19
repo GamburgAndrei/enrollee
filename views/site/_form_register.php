@@ -2,17 +2,13 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use app\widgets\Alert;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
-use app\assets\AppAsset;
+$this->title = 'Регистрация';
 ?>
 
 
 
 <div class="site-_form_register container">
-
+    <h1><?= Html::encode($this->title) ?></h1>
     <?php $form = ActiveForm::begin([
         'id' => 'register',
       /*  'enableAjaxValidation' => true,*/
